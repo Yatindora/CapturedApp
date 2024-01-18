@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+</head>
+<body class="w-[94vw] mx-auto bg-zinc-800 overflow-x-hidden">
+
+    <div class="w-full px-10 py-3 flex justify-between bg-zinc-800 text-white items-center">
+        <h3 class="font-bold text-5xl ">Captured</h3>
+        <div class="flex gap-10 items-center">
+            <a class="text-[1.4rem] hover:text-slate-500  duration-200" href="/profile">Profile</a>
+            <a class="text-[1.4rem] hover:text-slate-500  duration-200" href="/feed">Feed</a>
+            <a href="/logout" class="text-[1.4rem] px-3 py-2 bg-red-700 text-white rounded-lg hover:opacity-90 duration-200">Logout</a>
+        </div>
+    </div>
+    
+    <div class="profile w-full  bg-zinc-800 text-white pt-1">
+
+        <form hidden id="uploadform" action="/fileupload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+        </form>
+
+        <div class="profdets flex flex-col items-center mt-20">
+            <div class="relative">
+                <span class="w-8 h-8 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200"><i id="uploadicon" class="text-zinc-800 ri-pencil-fill hover:opacity-50  duration-200"></i></span>
+                <div class="w-32 h-32 bg-zinc-200 bg-[url('https://i.pinimg.com/564x/58/35/ad/5835ad685f4b81eb269a395cbf212b40.jpg')] bg-cover rounded-full overflow-hidden">
+                    <img src="/images/uploads/<%= user.profileImage%>" alt="" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <h1 class="text-3xl font-semibold text-white mt-5"><%= user.fullname%></h1>
+            <h3 class="text-md">@<%=user.username%></h3>
+            <a href="/changedName" class="px-7 py-2 mt-2 bg-zinc-700 rounded-full text-xs font-semibold">Edit</a>
+            <a href="/add" class="px-10 py-2 rounded-lg bg-red-700 text-[1.2rem] font-semibold mt-10 hover:opacity-70  duration-400">Add New Post</a>
+        </div>
+
+        
+
+        <div class="cards flex flex-wrap gap-10 px-10 mt-12">
+            <div class="card">
+                <div class="w-52 h-52 bg-zinc-200 overflow-hidden rounded-lg">
+                    <a href="/show/posts">
+                        <img src="/images/uploads/<%= user?.posts[0]?.image %>" alt="No Post Uploaded" class="w-full h-full object-cover text-black font-semibold text-[1.2rem]">
+                    </a>
+                </div>
+                <a href="/show/posts" class="inline-block text-2xl font-semibold mt-3">Your Uploads</a>
+                <a href="/show/posts" class="block text-xl font-medium opacity-60"><%= user.posts.length%></a>
+            </div>
+            
+        </div>
+
+    </div>
+
+
+    <script>
+        document.querySelector("#uploadicon").addEventListener("click",function(){
+            document.querySelector("#uploadform input").click();
+        })
+
+        document.querySelector("#uploadform input").addEventListener("change", function(){
+            document.querySelector("#uploadform").submit();
+        })
+    </script>
+
+</body>
+</html>
